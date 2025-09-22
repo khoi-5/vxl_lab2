@@ -116,35 +116,26 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   	setTimer(0, 500);
-  	HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
+  	//HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
   	int counter = 0;
 
   while (1){
 	  if (timer_flag[0] == 1) {
-		switch (counter) {
-		case 0:
-			set_state(0, 1, 1, 1);
-			display7SEG(1);
-			break;
-		case 1:
-			set_state(1, 0, 1, 1);
-			display7SEG(2);
-			HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 1);
-			break;
-		case 2:
-			set_state(1, 1, 0, 1);
-			display7SEG(3);
-			break;
-		case 3:
-			set_state(1, 1, 1, 0);
-			display7SEG(0);
-			HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
-			counter = -1;
-			break;
-		}
-		counter++;
-		setTimer(0, 500);
-	  }
+	  		switch (counter) {
+	  		case 0:
+	  			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 0);
+	  			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+	  			display7SEG(1);
+	  			counter++;
+	  			break;
+	  		case 1:
+	  			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+	  			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 0);
+	  			display7SEG(2);
+	  			counter = 0;
+	  			break;
+	  		}
+	  		setTimer(0, 500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
