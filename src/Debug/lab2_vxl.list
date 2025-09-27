@@ -332,8 +332,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer(0, 500);
- 80002dc:	f44f 71fa 	mov.w	r1, #500	; 0x1f4
+  setTimer(0, 1000);
+ 80002dc:	f44f 717a 	mov.w	r1, #1000	; 0x3e8
  80002e0:	2000      	movs	r0, #0
  80002e2:	f000 f931 	bl	8000548 <setTimer>
   HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
