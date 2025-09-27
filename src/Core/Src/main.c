@@ -159,33 +159,29 @@ int main(void)
   setTimer(0, 500);
   HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
   int counter = 0;
-  if (timer_flag[0] == 1) {
-		switch (counter) {
-		case 0:
-			set_state(0, 1, 1, 1);
-			display7SEG(1);
-			break;
-		case 1:
-			set_state(1, 0, 1, 1);
-			display7SEG(2);
-			HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 1);
-			break;
-		case 2:
-			set_state(1, 1, 0, 1);
-			display7SEG(3);
-			break;
-		case 3:
-			set_state(1, 1, 1, 0);
-			display7SEG(0);
-			HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
-			counter = -1;
-			break;
-		}
-		counter++;
-		setTimer(0, 500);
-	}
-  while (1){
 
+  while (1){
+	  if (timer_flag[0] == 1) {
+	  		switch (counter) {
+	  		case 0:
+	  			update7SEG(0);
+	  			break;
+	  		case 1:
+	  			update7SEG(1);
+	  			HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 1);
+	  			break;
+	  		case 2:
+	  			update7SEG(2);
+	  			break;
+	  		case 3:
+	  			update7SEG(3);
+	  			HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
+	  			counter = -1;
+	  			break;
+	  		}
+	  		counter++;
+	  		setTimer(0, 500);
+	  	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
