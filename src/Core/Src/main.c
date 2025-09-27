@@ -19,7 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "software_timer.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -94,8 +94,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  setTimer(0, 100);
   while (1)
   {
+	  if(timer_flag[0] == 1){
+		  setTimer(0,100);
+		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+	  }
 
     /* USER CODE END WHILE */
 
@@ -209,15 +214,9 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-int counter = 100;
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	if (counter >0){
-		counter--;
-		if (counter <=0){
-			counter = 100;
-			HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-		}
-	}
+	timerRun();
 }
 /* USER CODE END 4 */
 
