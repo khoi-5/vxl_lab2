@@ -81,6 +81,12 @@ void update_matrix_buffer() {
 	matrix_buffer[6] = 0x66;
 	matrix_buffer[7] = 0x00;
 }
+int shift_counter = 0;
+void shift_matrix_left() {
+	for (int i = 0; i < MAX_LED_MATRIX; i++) {
+		matrix_buffer[i] = (matrix_buffer[i] << 1) | (matrix_buffer[i] >> 7);
+	}
+}
 void set_COL(uint8_t data) {
 	for (int i = 0; i < MAX_LED_MATRIX; i++) {
 		GPIO_PinState state = (data & (1 << i)) ? GPIO_PIN_RESET : GPIO_PIN_SET;
@@ -134,7 +140,7 @@ void updateLEDMatrix(int index) {
 		break;
 	}
 }
-#define NUMBER 50
+#define NUMBER 25
 /* USER CODE END 0 */
 
 /**
@@ -178,11 +184,16 @@ int main(void)
   while (1){
 
 	  if (timer_flag[0] == 1) {
-	  			if (index_led_matrix >= MAX_LED_MATRIX) {
-	  				index_led_matrix = 0;
-	  			}
-	  			updateLEDMatrix(index_led_matrix++);
-	  			setTimer(0, NUMBER);
+			if (index_led_matrix >= MAX_LED_MATRIX) {
+				index_led_matrix = 0;
+			}
+			updateLEDMatrix(index_led_matrix++);
+			shift_counter++;
+			if (shift_counter >= 10) {
+				shift_matrix_left();
+				shift_counter = 0;
+			}
+			setTimer(0, NUMBER);
 	  		}
     /* USER CODE END WHILE */
 
