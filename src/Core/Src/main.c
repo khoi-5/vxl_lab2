@@ -166,6 +166,8 @@ int main(void)
   //setTimer(0, 1000);
   //HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
   setTimer(0, 1000);
+  setTimer(1, 250);
+  updateClockBuffer();
   while (1){
 	  if (timer_flag[0] == 1) {
 	  			second++;
@@ -181,12 +183,16 @@ int main(void)
 	  				hour = 0;
 	  			}
 	  			updateClockBuffer();
-	  			if (index_led >= MAX_LED) {
-	  				index_led = 0;
-	  			}
-	  			update7SEG(index_led++);
+
 	  			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
 	  			setTimer(0, 1000);
+	  		}
+	  		if (timer_flag[1] == 1) {
+	  			if (index_led >= MAX_LED) {
+					index_led = 0;
+				}
+	  			update7SEG(index_led++);
+	  			setTimer(1, 250);
 	  		}
     /* USER CODE END WHILE */
 
