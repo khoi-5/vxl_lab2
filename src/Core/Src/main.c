@@ -158,30 +158,17 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   setTimer(0, 1000);
   HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
-  int counter = 0;
+
 
   while (1){
 	  if (timer_flag[0] == 1) {
-	  		switch (counter) {
-	  		case 0:
-	  			update7SEG(0);
-	  			break;
-	  		case 1:
-	  			update7SEG(1);
-	  			HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 1);
-	  			break;
-	  		case 2:
-	  			update7SEG(2);
-	  			break;
-	  		case 3:
-	  			update7SEG(3);
-	  			HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
-	  			counter = -1;
-	  			break;
-	  		}
-	  		counter++;
-	  		setTimer(0, 500);
-	  	}
+	  		  if (index_led >= MAX_LED) {
+	  		  	 index_led = 0;
+	  		  	}
+	  		  update7SEG(index_led++);
+	  	  		setTimer(0, 1000);
+	  	  	}
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
