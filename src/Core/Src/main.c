@@ -163,8 +163,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer(0, 1000);
-  HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
+  //setTimer(0, 1000);
+  //HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
 
   while (1){
 	  second++;
@@ -310,16 +310,16 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-int counter = 0;
+int counter = 100;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	counter++;
+	counter--;
 		if (index_led >= MAX_LED) {
 			index_led = 0;
 		}
-		if (counter >= 100) {
+		if (counter <= 0) {
 			update7SEG(index_led++);
 			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-			counter = 0;
+			counter = 100;
 		}
 
 }
