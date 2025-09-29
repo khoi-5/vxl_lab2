@@ -464,7 +464,6 @@ int main(void)
 	  			}
 	  			updateClockBuffer();
  80003c0:	f7ff ff7e 	bl	80002c0 <updateClockBuffer>
-
 	  			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
  80003c4:	2110      	movs	r1, #16
  80003c6:	4815      	ldr	r0, [pc, #84]	; (800041c <main+0xdc>)
