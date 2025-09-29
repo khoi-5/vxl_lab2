@@ -95,7 +95,7 @@ void set_state(GPIO_PinState EN0_state, GPIO_PinState EN1_state,
 
 const int MAX_LED = 4;
 int index_led = 0;
-int led_buffer[4] = { 1, 2, 3, 4 };
+int led_buffer[4] = { 1, 2, 3, 9 };
 void update7SEG(int index) {
 	switch (index) {
 	case 0:
@@ -158,28 +158,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   setTimer(0, 500);
   HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
-  int counter = 0;
+
 
   while (1){
 	  if (timer_flag[0] == 1) {
-	  		switch (counter) {
-	  		case 0:
-	  			update7SEG(0);
-	  			break;
-	  		case 1:
-	  			update7SEG(1);
-	  			HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 1);
-	  			break;
-	  		case 2:
-	  			update7SEG(2);
-	  			break;
-	  		case 3:
-	  			update7SEG(3);
-	  			HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
-	  			counter = -1;
-	  			break;
-	  		}
-	  		counter++;
+		  if (index_led >= MAX_LED) {
+		  	 index_led = 0;
+		  	}
+		  update7SEG(index_led++);
 	  		setTimer(0, 500);
 	  	}
     /* USER CODE END WHILE */
