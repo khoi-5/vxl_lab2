@@ -56,7 +56,84 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+//LED
 
+GPIO_TypeDef *SEG_PORTS[12] = { SEG0_GPIO_Port, SEG1_GPIO_Port,
+SEG2_GPIO_Port, SEG3_GPIO_Port, SEG4_GPIO_Port, SEG5_GPIO_Port,
+SEG6_GPIO_Port };
+uint16_t SEG_PINS[12] = { SEG0_Pin, SEG1_Pin, SEG2_Pin, SEG3_Pin,
+SEG4_Pin, SEG5_Pin, SEG6_Pin };
+GPIO_PinState LEDS_state[10][7] = {
+		// a, b, c, d, e, f, g
+		{0, 0, 0, 0, 0, 0, 1}, // 0
+		{1, 0, 0, 1, 1, 1, 1}, // 1
+		{0, 0, 1, 0, 0, 1, 0}, // 2
+		{0, 0, 0, 0, 1, 1, 0}, // 3
+		{1, 0, 0, 1, 1, 0, 0}, // 4
+		{0, 1, 0, 0, 1, 0, 0}, // 5
+		{0, 1, 0, 0, 0, 0, 0}, // 6
+		{0, 0, 0, 1, 1, 1, 1}, // 7
+		{0, 0, 0, 0, 0, 0, 0}, // 8
+		{0, 0, 0, 0, 1, 0, 0}  // 9
+};
+void set_LEDS(GPIO_PinState *L_LEDS_state) {
+	for (int i = 0; i < 7; i++) {
+		HAL_GPIO_WritePin(SEG_PORTS[i], SEG_PINS[i], L_LEDS_state[i]);
+	}
+}
+void display7SEG(int num) {
+	if (num >= 0 && num <= 9) {
+	        set_LEDS(LEDS_state[num]);
+	    }
+}
+void set_state(GPIO_PinState EN0_state, GPIO_PinState EN1_state,
+		GPIO_PinState EN2_state, GPIO_PinState EN3_state) {
+	HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, EN0_state);
+	HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, EN1_state);
+	HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, EN2_state);
+	HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, EN3_state);
+}
+
+const int MAX_LED = 4;
+int index_led = 0;
+int led_buffer[4] = { 1, 2, 3, 4 };
+void update7SEG(int index) {
+	switch (index) {
+	case 0:
+		set_state(0, 1, 1, 1);
+		display7SEG(led_buffer[0]);
+		break;
+	case 1:
+		set_state(1, 0, 1, 1);
+		display7SEG(led_buffer[1]);
+		break;
+	case 2:
+		set_state(1, 1, 0, 1);
+		display7SEG(led_buffer[2]);
+		break;
+	case 3:
+		set_state(1, 1, 1, 0);
+		display7SEG(led_buffer[3]);
+		break;
+	default:
+		break;
+	}
+}
+
+int hour = 15, minute = 8, second = 50;
+void updateClockBuffer() {
+	led_buffer[0] = hour / 10;
+	led_buffer[1] = hour % 10;
+	led_buffer[2] = minute / 10;
+	led_buffer[3] = minute % 10;
+}
+
+
+
+
+
+
+//LED MATRIX
 GPIO_TypeDef *EN_PORTS[8] = { ENM0_GPIO_Port, ENM1_GPIO_Port, ENM2_GPIO_Port,
 ENM3_GPIO_Port, ENM4_GPIO_Port, ENM5_GPIO_Port, ENM6_GPIO_Port,
 ENM7_GPIO_Port };
@@ -120,8 +197,8 @@ void updateLEDMatrix(int row) {
     set_ROW(row & 7);
 }
 
-#define NUMBER 5
-#define NUMBER1 2
+#define NUMBER 16
+#define NUMBER1 16
 /* USER CODE END 0 */
 
 /**
@@ -163,39 +240,81 @@ int main(void)
   setTimer(0, NUMBER);
   setTimer(1, NUMBER1);
 
+  updateClockBuffer();
+  setTimer(2, 1000);
+  setTimer(3, 250);
+
+  setTimer(4, 1000);
+
+
 
   while (1){
-
+	  // timer 0
 	  if (timer_flag[0] == 1) {
-	          timer_flag[0] = 0;
+			  timer_flag[0] = 0;
 
-	          rows_all_off();
+			  rows_all_off();
 
-	          next_row = (cur_row + 1) & 7;
+			  next_row = (cur_row + 1) & 7;
 
-	          need_update = 1;
+			  need_update = 1;
 
-	          setTimer(0, NUMBER);
-	      }
+			  setTimer(0, NUMBER);
+		  }
 
+	  //timer 1
+	  if (timer_flag[1] == 1) {
+		  timer_flag[1] = 0;
 
-	      if (timer_flag[1] == 1) {
-	          timer_flag[1] = 0;
+		  if (need_update) {
 
-	          if (need_update) {
-
-	              set_COL(matrix_buffer[next_row]);
-
-
-	              row_on_fast(next_row);
+			  set_COL(matrix_buffer[next_row]);
 
 
-	              cur_row = next_row;
-	              need_update = 0;
-	          }
+			  row_on_fast(next_row);
 
-	          setTimer(1, NUMBER1);
-	      }
+
+			  cur_row = next_row;
+			  need_update = 0;
+		  }
+
+		  setTimer(1, NUMBER1);
+	  }
+
+	  //timer 2
+	  if (timer_flag[2] == 1) {
+			second++;
+			if (second >= 60) {
+				second = 0;
+				minute++;
+			}
+			if (minute >= 60) {
+				minute = 0;
+				hour++;
+			}
+			if (hour >= 24) {
+				hour = 0;
+			}
+			updateClockBuffer();
+			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+			setTimer(2, 1000);
+		}
+
+	  	//timer 3
+		if (timer_flag[3] == 1) {
+			if (index_led >= MAX_LED) {
+				index_led = 0;
+			}
+			update7SEG(index_led++);
+			setTimer(3, 250);
+		}
+
+		//timer 4
+		if (timer_flag[4] == 1){
+			HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+			setTimer(4,1000);
+		}
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
