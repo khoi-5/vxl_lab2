@@ -266,9 +266,8 @@ int main(void)
 
 	  set_COL(matrix_buffer[cur_row]);
 
-
-
 	  setTimer(1, NUMBER1);
+
 	  }
 
 	  //timer 2
