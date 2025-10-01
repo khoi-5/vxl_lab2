@@ -69,7 +69,9 @@ uint16_t ROW_PINS[8] = { ROW0_Pin, ROW1_Pin, ROW2_Pin, ROW3_Pin, ROW4_Pin,
 ROW5_Pin, ROW6_Pin, ROW7_Pin };
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-int index_shift = 0;
+int cur_row = 0;
+int next_row = 0;
+int need_update = 0;
 uint8_t matrix_buffer[8] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };
 void update_matrix_buffer() {
 	matrix_buffer[0] = 0x3C;
@@ -102,45 +104,24 @@ void set_ROW(int index_row) {
 		}
 	}
 }
-void updateLEDMatrix(int index) {
-	switch (index) {
-	case 0:
-		set_COL(matrix_buffer[0]);
-		set_ROW(0);
-		break;
-	case 1:
-		set_COL(matrix_buffer[1]);
-		set_ROW(1);
-		break;
-	case 2:
-		set_COL(matrix_buffer[2]);
-		set_ROW(2);
-		break;
-	case 3:
-		set_COL(matrix_buffer[3]);
-		set_ROW(3);
-		break;
-	case 4:
-		set_COL(matrix_buffer[4]);
-		set_ROW(4);
-		break;
-	case 5:
-		set_COL(matrix_buffer[5]);
-		set_ROW(5);
-		break;
-	case 6:
-		set_COL(matrix_buffer[6]);
-		set_ROW(6);
-		break;
-	case 7:
-		set_COL(matrix_buffer[7]);
-		set_ROW(7);
-		break;
-	default:
-		break;
-	}
+void updateLEDMatrix(int row) {
+    set_COL(matrix_buffer[row & 7]);
+    set_ROW(row & 7);
 }
-#define NUMBER 25
+
+void rows_all_off(void) {
+    for (int i = 0; i < 8; ++i) {
+        HAL_GPIO_WritePin(ROW_PORTS[i], ROW_PINS[i], GPIO_PIN_SET);
+    }
+}
+
+
+void row_on(uint8_t idx) {
+    HAL_GPIO_WritePin(ROW_PORTS[idx], ROW_PINS[idx], GPIO_PIN_RESET);
+}
+#define NUMBER 4
+#define NUMBER1 2
+#define SHIFT_STEPS  10
 /* USER CODE END 0 */
 
 /**
@@ -179,22 +160,50 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   setTimer(0, NUMBER);
+
+  setTimer(1, NUMBER1);
   update_matrix_buffer();
 
   while (1){
 
 	  if (timer_flag[0] == 1) {
-			if (index_led_matrix >= MAX_LED_MATRIX) {
-				index_led_matrix = 0;
-			}
-			updateLEDMatrix(index_led_matrix++);
-			shift_counter++;
-			if (shift_counter >= 10) {
-				shift_matrix_left();
-				shift_counter = 0;
-			}
-			setTimer(0, NUMBER);
-	  		}
+	          timer_flag[0] = 0;
+
+
+	          rows_all_off();
+
+
+	          if (++shift_counter >= SHIFT_STEPS) {
+	              shift_matrix_left();
+	              shift_counter = 0;
+	          }
+
+
+	          next_row = (cur_row + 1) & 7;
+
+
+	          need_update = 1;
+
+	          setTimer(0, NUMBER);
+	      }
+
+
+	      if (timer_flag[1] == 1) {
+	          timer_flag[1] = 0;
+
+	          if (need_update) {
+
+	              set_COL(matrix_buffer[next_row]);
+
+	              row_on(next_row);
+
+	              cur_row = next_row;
+
+	              need_update = 0;
+	          }
+
+	          setTimer(1, 1);
+	      }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
