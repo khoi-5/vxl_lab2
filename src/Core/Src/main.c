@@ -96,45 +96,12 @@ void set_ROW(int index_row) {
 		}
 	}
 }
-void updateLEDMatrix(int index) {
-	switch (index) {
-	case 0:
-		set_COL(matrix_buffer[0]);
-		set_ROW(0);
-		break;
-	case 1:
-		set_COL(matrix_buffer[1]);
-		set_ROW(1);
-		break;
-	case 2:
-		set_COL(matrix_buffer[2]);
-		set_ROW(2);
-		break;
-	case 3:
-		set_COL(matrix_buffer[3]);
-		set_ROW(3);
-		break;
-	case 4:
-		set_COL(matrix_buffer[4]);
-		set_ROW(4);
-		break;
-	case 5:
-		set_COL(matrix_buffer[5]);
-		set_ROW(5);
-		break;
-	case 6:
-		set_COL(matrix_buffer[6]);
-		set_ROW(6);
-		break;
-	case 7:
-		set_COL(matrix_buffer[7]);
-		set_ROW(7);
-		break;
-	default:
-		break;
-	}
+void updateLEDMatrix(int row) {
+    set_COL(matrix_buffer[row & 7]);
+    set_ROW(row & 7);
 }
-#define NUMBER 50
+
+#define NUMBER 30
 /* USER CODE END 0 */
 
 /**
@@ -178,12 +145,12 @@ int main(void)
   while (1){
 
 	  if (timer_flag[0] == 1) {
-	  			if (index_led_matrix >= MAX_LED_MATRIX) {
-	  				index_led_matrix = 0;
-	  			}
-	  			updateLEDMatrix(index_led_matrix++);
-	  			setTimer(0, NUMBER);
-	  		}
+			if (index_led_matrix >= MAX_LED_MATRIX) {
+				index_led_matrix = 0;
+			}
+			updateLEDMatrix(index_led_matrix++);
+			setTimer(0, NUMBER);
+		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
