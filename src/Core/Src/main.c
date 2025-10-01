@@ -201,7 +201,7 @@ void row_on(uint8_t idx) {
 }
 #define NUMBER 15
 #define NUMBER1 15
-#define SHIFT_STEPS  10
+#define SHIFT_STEPS  8
 /* USER CODE END 0 */
 
 /**
