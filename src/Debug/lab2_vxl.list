@@ -280,16 +280,17 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer(0, NUMBER);
- 800027e:	2105      	movs	r1, #5
- 8000280:	2000      	movs	r0, #0
- 8000282:	f000 f93b 	bl	80004fc <setTimer>
-  setTimer(1, NUMBER1);
- 8000286:	2102      	movs	r1, #2
- 8000288:	2001      	movs	r0, #1
- 800028a:	f000 f937 	bl	80004fc <setTimer>
   update_matrix_buffer();
- 800028e:	f7ff ff99 	bl	80001c4 <update_matrix_buffer>
+ 800027e:	f7ff ffa1 	bl	80001c4 <update_matrix_buffer>
+  setTimer(0, NUMBER);
+ 8000282:	2105      	movs	r1, #5
+ 8000284:	2000      	movs	r0, #0
+ 8000286:	f000 f939 	bl	80004fc <setTimer>
+  setTimer(1, NUMBER1);
+ 800028a:	2102      	movs	r1, #2
+ 800028c:	2001      	movs	r0, #1
+ 800028e:	f000 f935 	bl	80004fc <setTimer>
+
 
   while (1){
 

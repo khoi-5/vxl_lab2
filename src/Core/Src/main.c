@@ -159,9 +159,10 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  update_matrix_buffer();
   setTimer(0, NUMBER);
   setTimer(1, NUMBER1);
-  update_matrix_buffer();
+
 
   while (1){
 
