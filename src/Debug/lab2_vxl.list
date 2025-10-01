@@ -616,12 +616,12 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   setTimer(0, NUMBER);
- 80004c6:	2110      	movs	r1, #16
+ 80004c6:	210f      	movs	r1, #15
  80004c8:	2000      	movs	r0, #0
  80004ca:	f000 f9bf 	bl	800084c <setTimer>
 
   setTimer(1, NUMBER1);
- 80004ce:	2110      	movs	r1, #16
+ 80004ce:	210f      	movs	r1, #15
  80004d0:	2001      	movs	r0, #1
  80004d2:	f000 f9bb 	bl	800084c <setTimer>
   update_matrix_buffer();
@@ -694,7 +694,7 @@ int main(void)
  800053a:	601a      	str	r2, [r3, #0]
 
 	          setTimer(0, NUMBER);
- 800053c:	2110      	movs	r1, #16
+ 800053c:	210f      	movs	r1, #15
  800053e:	2000      	movs	r0, #0
  8000540:	f000 f984 	bl	800084c <setTimer>
 	      }

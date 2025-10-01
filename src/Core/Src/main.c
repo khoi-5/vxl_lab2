@@ -199,8 +199,8 @@ void rows_all_off(void) {
 void row_on(uint8_t idx) {
     HAL_GPIO_WritePin(ROW_PORTS[idx], ROW_PINS[idx], GPIO_PIN_RESET);
 }
-#define NUMBER 16
-#define NUMBER1 16
+#define NUMBER 15
+#define NUMBER1 15
 #define SHIFT_STEPS  10
 /* USER CODE END 0 */
 
