@@ -564,11 +564,11 @@ int main(void)
   update_matrix_buffer();
  8000472:	f7ff ffa1 	bl	80003b8 <update_matrix_buffer>
   setTimer(0, NUMBER);
- 8000476:	2110      	movs	r1, #16
+ 8000476:	210f      	movs	r1, #15
  8000478:	2000      	movs	r0, #0
  800047a:	f000 f9ad 	bl	80007d8 <setTimer>
   setTimer(1, NUMBER1);
- 800047e:	2110      	movs	r1, #16
+ 800047e:	210f      	movs	r1, #15
  8000480:	2001      	movs	r0, #1
  8000482:	f000 f9a9 	bl	80007d8 <setTimer>
 
@@ -619,7 +619,7 @@ int main(void)
  80004ca:	601a      	str	r2, [r3, #0]
 
 			  setTimer(0, NUMBER);
- 80004cc:	2110      	movs	r1, #16
+ 80004cc:	210f      	movs	r1, #15
  80004ce:	2000      	movs	r0, #0
  80004d0:	f000 f982 	bl	80007d8 <setTimer>
 		  }
@@ -670,7 +670,7 @@ int main(void)
 		  }
 
 		  setTimer(1, NUMBER1);
- 8000512:	2110      	movs	r1, #16
+ 8000512:	210f      	movs	r1, #15
  8000514:	2001      	movs	r0, #1
  8000516:	f000 f95f 	bl	80007d8 <setTimer>
 	  }

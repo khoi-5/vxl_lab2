@@ -197,8 +197,8 @@ void updateLEDMatrix(int row) {
     set_ROW(row & 7);
 }
 
-#define NUMBER 16
-#define NUMBER1 16
+#define NUMBER 15
+#define NUMBER1 15
 /* USER CODE END 0 */
 
 /**
