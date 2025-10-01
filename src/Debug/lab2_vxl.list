@@ -638,8 +638,8 @@ int main(void)
  80004ea:	2003      	movs	r0, #3
  80004ec:	f000 f9ae 	bl	800084c <setTimer>
 
-  setTimer(4, 1000);
- 80004f0:	f44f 717a 	mov.w	r1, #1000	; 0x3e8
+  setTimer(4, 500);
+ 80004f0:	f44f 71fa 	mov.w	r1, #500	; 0x1f4
  80004f4:	2004      	movs	r0, #4
  80004f6:	f000 f9a9 	bl	800084c <setTimer>
 

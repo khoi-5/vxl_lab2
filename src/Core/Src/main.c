@@ -248,7 +248,7 @@ int main(void)
   setTimer(2, 1000);
   setTimer(3, 250);
 
-  setTimer(4, 1000);
+  setTimer(4, 500);
 
   while (1){
 	  //timer 0
