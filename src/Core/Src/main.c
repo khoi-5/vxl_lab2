@@ -277,10 +277,10 @@ int main(void)
 	      }
 
 	      //timer 2
-	     	  if (timer_flag[2] == 1) {
-	     			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-	     			setTimer(2, 1000);
-	     		}
+		  if (timer_flag[2] == 1) {
+				HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+				setTimer(2, 1000);
+			}
 
 		  //timer 3
 			  if (timer_flag[3] == 1) {

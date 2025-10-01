@@ -702,20 +702,20 @@ int main(void)
 	      }
 
 	      //timer 2
-	     	  if (timer_flag[2] == 1) {
+		  if (timer_flag[2] == 1) {
  8000556:	4b32      	ldr	r3, [pc, #200]	; (8000620 <main+0x184>)
  8000558:	689b      	ldr	r3, [r3, #8]
  800055a:	2b01      	cmp	r3, #1
  800055c:	d108      	bne.n	8000570 <main+0xd4>
-	     			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+				HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
  800055e:	2110      	movs	r1, #16
  8000560:	4833      	ldr	r0, [pc, #204]	; (8000630 <main+0x194>)
  8000562:	f000 fd61 	bl	8001028 <HAL_GPIO_TogglePin>
-	     			setTimer(2, 1000);
+				setTimer(2, 1000);
  8000566:	f44f 717a 	mov.w	r1, #1000	; 0x3e8
  800056a:	2002      	movs	r0, #2
  800056c:	f000 f958 	bl	8000820 <setTimer>
-	     		}
+			}
 
 		  //timer 3
 			  if (timer_flag[3] == 1) {
