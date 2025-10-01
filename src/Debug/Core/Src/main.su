@@ -3,8 +3,8 @@ main.c:84:6:display7SEG	16	static
 main.c:89:6:set_state	24	static
 main.c:100:6:update7SEG	16	static
 main.c:124:6:updateClockBuffer	4	static
-main.c:159:20:rows_all_off	16	static
-main.c:166:20:row_on_fast	16	static
+main.c:159:6:rows_all_off	16	static
+main.c:166:6:row_on	16	static
 main.c:170:6:update_matrix_buffer	4	static
 main.c:180:6:set_COL	24	static
 main.c:186:6:set_ROW	24	static

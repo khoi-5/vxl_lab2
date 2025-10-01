@@ -156,14 +156,14 @@ int need_update = 0;
 
 
 
-static inline void rows_all_off(void) {
+void rows_all_off(void) {
 	for (int i = 0; i < 8; ++i) {
 	        HAL_GPIO_WritePin(ROW_PORTS[i], ROW_PINS[i], GPIO_PIN_SET);
 	    }
 }
 
 
-static inline void row_on_fast(uint8_t idx) {
+void row_on(uint8_t idx) {
 	HAL_GPIO_WritePin(ROW_PORTS[idx], ROW_PINS[idx], GPIO_PIN_RESET);
 }
 
@@ -244,7 +244,7 @@ int main(void)
   setTimer(2, 1000);
   setTimer(3, 250);
 
-  setTimer(4, 1000);
+  setTimer(4, 500);
 
 
 
@@ -271,7 +271,7 @@ int main(void)
 			  set_COL(matrix_buffer[next_row]);
 
 
-			  row_on_fast(next_row);
+			  row_on(next_row);
 
 
 			  cur_row = next_row;
@@ -312,7 +312,7 @@ int main(void)
 		//timer 4
 		if (timer_flag[4] == 1){
 			HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-			setTimer(4,1000);
+			setTimer(4,500);
 		}
 
     /* USER CODE END WHILE */
