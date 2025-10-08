@@ -184,21 +184,20 @@ void set_COL(uint8_t data) {
 	}
 }
 void set_ROW(int index_row) {
-	for (int i = 0; i < MAX_LED_MATRIX; i++) {
-		if (i == index_row) {
-			HAL_GPIO_WritePin(ROW_PORTS[i], ROW_PINS[i], 0);
-		} else {
-			HAL_GPIO_WritePin(ROW_PORTS[i], ROW_PINS[i], 1);
-		}
-	}
+    for (int i = 0; i < MAX_LED_MATRIX; ++i) {
+        HAL_GPIO_WritePin(ROW_PORTS[i], ROW_PINS[i], GPIO_PIN_SET);
+    }
+
+    HAL_GPIO_WritePin(ROW_PORTS[index_row], ROW_PINS[index_row], GPIO_PIN_RESET);
+
 }
 void updateLEDMatrix(int row) {
     set_COL(matrix_buffer[row & 7]);
     set_ROW(row & 7);
 }
 
-#define NUMBER 15
-#define NUMBER1 15
+#define NUMBER 30
+#define NUMBER1 30
 /* USER CODE END 0 */
 
 /**
@@ -253,46 +252,45 @@ int main(void)
   while (1){
 	  // timer 0
 	  if (timer_flag[0] == 1) {
-
-
+		  //TODO
 		  cur_row = (cur_row + 1) & 7;
 		  set_ROW(cur_row);
-
 		  setTimer(0, NUMBER);
-		}
+	  }
 
 	  //timer 1
 	  if (timer_flag[1] == 1) {
-
-	  set_COL(matrix_buffer[cur_row]);
-
-	  setTimer(1, NUMBER1);
-
+		  //TODO
+		  set_COL(matrix_buffer[cur_row]);
+		  setTimer(1, NUMBER1);
 	  }
 
 	  //timer 2
 	  if (timer_flag[2] == 1) {
-			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-			setTimer(2, 1000);
-		}
+		  //TODO
+		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+		  setTimer(2, 1000);
+	  }
 
 	  //timer 3
-	  	  if (timer_flag[3] == 1) {
-	  			second++;
-	  			if (second >= 60) {
-	  				second = 0;
-	  				minute++;
-	  			}
-	  			if (minute >= 60) {
-	  				minute = 0;
-	  				hour++;
-	  			}
-	  			if (hour >= 24) {
-	  				hour = 0;
-	  			}
-	  			updateClockBuffer();
-	  			setTimer(3, 1000);
-	  		}
+	  if (timer_flag[3] == 1) {
+		  //TODO
+		  second++;
+		  if (second >= 60) {
+			second = 0;
+			minute++;
+		  }
+		  if (minute >= 60) {
+			minute = 0;
+			hour++;
+		  }
+		  if (hour >= 24) {
+			hour = 0;
+		  }
+		  updateClockBuffer();
+		  setTimer(3, 1000);
+
+	  }
 
 	  	//timer 4
 		if (timer_flag[4] == 1) {

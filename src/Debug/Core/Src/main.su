@@ -8,10 +8,10 @@ main.c:166:6:row_on	16	static
 main.c:170:6:update_matrix_buffer	4	static
 main.c:180:6:set_COL	24	static
 main.c:186:6:set_ROW	24	static
-main.c:195:6:updateLEDMatrix	16	static
-main.c:208:5:main	8	static
-main.c:323:6:SystemClock_Config	72	static
-main.c:359:13:MX_TIM2_Init	32	static
-main.c:404:13:MX_GPIO_Init	32	static
-main.c:454:6:HAL_TIM_PeriodElapsedCallback	16	static
-main.c:464:6:Error_Handler	4	static,ignoring_inline_asm
+main.c:194:6:updateLEDMatrix	16	static
+main.c:207:5:main	8	static
+main.c:321:6:SystemClock_Config	72	static
+main.c:357:13:MX_TIM2_Init	32	static
+main.c:402:13:MX_GPIO_Init	32	static
+main.c:452:6:HAL_TIM_PeriodElapsedCallback	16	static
+main.c:462:6:Error_Handler	4	static,ignoring_inline_asm
