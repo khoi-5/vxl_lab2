@@ -156,7 +156,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer(0, 1000);
+  setTimer(0, 250);
   HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
 
 
